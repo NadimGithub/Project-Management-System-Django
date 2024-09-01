@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Attendance List{% endblock %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-xl">
+               
+                <div class="card my-2">
+                    <h2 class="card-header">Attendance List</h2>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Date</th>
+                                    <th>Check In</th>
+                                    <th>Check Out</th>
+                                    <th>Verified</th>
+                                    {% if request.user.employee.role in 'project_manager teamlead_dev teamlead_qa ceo' %}
+                                    <th>Actions</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for attendance in attendances %}
+                                <tr>
+                                    <td>{{ attendance.employee.first_name }} {{ attendance.employee.last_name }}</td>
+                                    <td>{{ attendance.date }}</td>
+                                    <td>{{ attendance.check_in_time }}</td>
+                                    <td>{{ attendance.check_out_time }}</td>
+                                    <td>{{ attendance.is_verified|yesno:"Yes,No" }}</td>
+                                    {% if request.user.employee.role in 'project_manager teamlead_dev teamlead_qa ceo' %}
+                                    <td>
+                                        {% if not attendance.is_verified %}
+                                        <a href="{% url 'verify_attendance' attendance.id %}" class="btn btn-success btn-sm">Verify</a>
+                                        {% endif %}
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="{% if request.user.employee.role in 'project_manager teamlead_dev teamlead_qa ceo' %}6{% else %}5{% endif %}">No attendance records found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="my-5" />
+    </div>
+</div>
+
+{% endblock content%}
+{% block javascripts %}
+
+{% endblock javascripts %}
+
+

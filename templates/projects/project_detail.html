@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Project Details{% endblock %}
+
+{% block content %}
+<h2>{{ project.name }}</h2>
+<p>{{ project.description }}</p>
+<p>Manager: {{ project.manager.first_name }} {{ project.manager.last_name }}</p>
+<p>Start Date: {{ project.start_date }}</p>
+<p>End Date: {{ project.end_date }}</p>
+
+<h3>Tasks</h3>
+<ul>
+    {% for task in tasks %}
+        <li>
+            {{ task.name }} - 
+            Assigned to: {{ task.assigned_to.first_name }} {{ task.assigned_to.last_name }} - 
+            Start Date: {{ task.start_date }} - 
+            End Date: {{ task.end_date }} - 
+            {% if task.is_completed %}Completed{% else %}Not Completed{% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'add_task' %}?project_id={{ project.id }}" class="btn btn-primary">Add Task</a>
+{% endblock %}

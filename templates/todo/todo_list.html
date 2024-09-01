@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-xl">
+               
+                <div class="card my-2">
+                    <h2 class="card-header">Todo List</h2>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Due Date</th>
+                                    <th>Completed</th>
+                                    <th>Project</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for todo in todos %}
+                                    <tr>
+                                        <td>{{ todo.title }}</td>
+                                        <td>{{ todo.description }}</td>
+                                        <td>{{ todo.due_date }}</td>
+                                        <td>{{ todo.is_completed|yesno:"Yes,No" }}</td>
+                                        <td>
+                                            {% if todo.project %}
+                                                {{ todo.project.name }}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'update_todo' todo.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                            <a href="{% url 'delete_todo' todo.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="6">No todos found.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="my-5" />
+    </div>
+</div>
+
+{% endblock content%}
+{% block javascripts %}
+
+{% endblock javascripts %}
+
+
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+<h2>Your Todo List</h2>
+
+<a href="{% url 'add_todo' %}" class="btn btn-primary">Add Todo</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Completed</th>
+            <th>Project</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for todo in todos %}
+            <tr>
+                <td>{{ todo.title }}</td>
+                <td>{{ todo.description }}</td>
+                <td>{{ todo.due_date }}</td>
+                <td>{{ todo.is_completed|yesno:"Yes,No" }}</td>
+                <td>
+                    {% if todo.project %}
+                        {{ todo.project.name }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'update_todo' todo.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_todo' todo.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">No todos found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %} {% endcomment %}

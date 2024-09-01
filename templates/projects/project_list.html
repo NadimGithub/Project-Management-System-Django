@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-xl">
+               
+                <div class="card my-2">
+                    <h2 class="card-header">Projects</h2>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Manager</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for project in projects %}
+                                <tr>
+                                    <td>{{ project.name }}</td>
+                                    <td>{{ project.description }}</td>
+                                    <td>{{ project.start_date }}</td>
+                                    <td>{{ project.end_date }}</td>
+                                    <td>{{ project.manager }}</td>
+                                    <td>
+                                        <a href="{% url 'update_project' project.pk %}" class="btn btn-warning">Edit</a>
+                                        <a href="{% url 'delete_project' project.pk %}" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6">No projects found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="my-5" />
+    </div>
+</div>
+
+{% endblock content%}
+{% block javascripts %}
+
+{% endblock javascripts %}
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+<h2>Project List</h2>
+<a href="{% url 'add_project' %}" class="btn btn-primary">Add Project</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Manager</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>{{ project.name }}</td>
+            <td>{{ project.description }}</td>
+            <td>{{ project.start_date }}</td>
+            <td>{{ project.end_date }}</td>
+            <td>{{ project.manager }}</td>
+            <td>
+                <a href="{% url 'update_project' project.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'delete_project' project.pk %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No projects found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %} {% endcomment %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-xl">
+               
+                <div class="card my-2">
+                    <h2 class="card-header">Tasks</h2>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Assigned To</th>
+                                    <th>Completed</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for task in tasks %}
+                                <tr>
+                                    <td>{{ task.project.name }}</td>
+                                    <td>{{ task.name }}</td>
+                                    <td>{{ task.description }}</td>
+                                    <td>{{ task.start_date }}</td>
+                                    <td>{{ task.end_date }}</td>
+                                    <td>{{ task.assigned_to }}</td>
+                                    <td>{{ task.is_completed|yesno:"Yes,No" }}</td>
+                                    <td>
+                                        <a href="{% url 'update_task' task.pk %}" class="btn btn-warning">Edit</a>
+                                        <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8">No tasks found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="my-5" />
+    </div>
+</div>
+
+{% endblock content%}
+{% block javascripts %}
+
+{% endblock javascripts %}
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% block title %}Tasks{% endblock %}
+{% block content %}
+<h2>Task List</h2>
+<a href="{% url 'add_task' %}" class="btn btn-primary">Add Task</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Assigned To</th>
+            <th>Completed</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.project.name }}</td>
+            <td>{{ task.name }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.start_date }}</td>
+            <td>{{ task.end_date }}</td>
+            <td>{{ task.assigned_to }}</td>
+            <td>{{ task.is_completed|yesno:"Yes,No" }}</td>
+            <td>
+                <a href="{% url 'update_task' task.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'delete_task' task.pk %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">No tasks found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %} {% endcomment %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Department List{% endblock %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-xl">
+               
+                <div class="card my-2">
+                    <h2 class="card-header">Department List</h2>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for department in departments %}
+                                    <tr>
+                                        <td>{{ department.name }}</td>
+                                        <td>{{ department.description }}</td>
+                                        <td>
+                                            <a href="{% url 'update_department' department.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                            <a href="{% url 'delete_department' department.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="3">No departments found.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="my-5" />
+    </div>
+</div>
+
+{% endblock content%}
+{% block javascripts %}
+
+{% endblock javascripts %}
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block title %}Department List{% endblock %}
+
+{% block content %}
+    <h2>Department List</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for department in departments %}
+                <tr>
+                    <td>{{ department.name }}</td>
+                    <td>{{ department.description }}</td>
+                    <td>
+                        <a href="{% url 'update_department' department.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'delete_department' department.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No departments found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %} {% endcomment %}
